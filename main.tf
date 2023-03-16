@@ -31,16 +31,6 @@ module "vpc" {
   }
 }
 
-resource "aws_instance" "blog" {
-  ami           = data.aws_ami.app_ami.id
-  instance_type = var.instance_type
-  
-  vpc_security_group_ids = [module.blog_security_group.security_group_id]
-
-  tags = {
-    Name = "HelloWorld"
-  }
-}
 
 module "blog_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
@@ -54,6 +44,17 @@ module "blog_security_group" {
 
   egress_rules = ["all-all"]
   egress_cidr_blocks = ["0.0.0.0/0"]
+}
+
+resource "aws_instance" "blog" {
+  ami           = data.aws_ami.app_ami.id
+  instance_type = var.instance_type
+  
+  vpc_security_group_ids = [module.blog_security_group.security_group_id]
+
+  tags = {
+    Name = "HelloWorld"
+  }
 }
 
 module "alb" {
