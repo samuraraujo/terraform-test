@@ -22,14 +22,14 @@ resource "aws_instance" "blog" {
   ami           = data.aws_ami.app_ami.id
   instance_type = var.instance_type
   
-  vpc_security_group_ids = [blog_security-group.security_group_id]
+  vpc_security_group_ids = [blog_security_group.security_group_id]
 
   tags = {
     Name = "HelloWorld"
   }
 }
 
-module "blog_security-group" {
+module "blog_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "4.17.1"
   name = "blog_new"
